@@ -27,6 +27,13 @@ public class UserService implements UserDetailsService{
 	@Autowired
 	private AuthService authService;
 	
+		
+	@Transactional(readOnly = true)
+	public UserDTO profileForCurrentUser() {
+		User entity = authService.authenticated();
+		return new UserDTO(entity);
+	}
+	
 	@Transactional(readOnly = true)
 	public UserDTO findById(Long id) {
 		authService.validateSeflOrAdmin(id);
